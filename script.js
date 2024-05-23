@@ -1,18 +1,20 @@
-let ansVarArr = ['rock', 'paper', 'scissors'];
+ansVarArr = ['rock', 'paper', 'scissors'];
+Object.freeze(ansVarArr);
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
 
-function getComputerChoice(ansVarArr) {
+function getComputerChoice() {
     let randomNum = getRandomInt(3);
     return ansVarArr[randomNum];
 }
 
-function getHumanChoice() {
-    let input = prompt('Enter your choice: rock, paper, scissors?').toLowerCase();
+function getHumanChoice(round) {
+    let input = prompt(`Round ${round + 1}. Enter your choice: rock, paper, scissors?`).toLowerCase();
+    // Check for wrong spelling
     while (ansVarArr.indexOf(input) === -1) {
-        input = prompt('Invalid input. Repeat your choice, please.').toLowerCase();
+        input = prompt(`Round ${round + 1}. Invalid input. Repeat your choice, please.`).toLowerCase();
     }
     return input;
 }
@@ -28,14 +30,17 @@ function getScore(roundWinner, score) {
         score.computer++;
         score.human++;
     }
+    return;
 }
 
-function playRound(score) {
+function playRound(score, round) {
     let computerChoice = getComputerChoice();
-    let humanChoice = getHumanChoice();
+    let humanChoice = getHumanChoice(round);
+    console.log('ComputerChoice:', computerChoice);
+    console.log('HumanChoice:', humanChoice);
     let roundWinner = getRoundWinner(computerChoice, humanChoice);
     getScore(roundWinner, score);
-    return score;
+    return;
 }
 
 function getRoundWinner(computerChoice, humanChoice) {
@@ -58,6 +63,7 @@ function getRoundWinner(computerChoice, humanChoice) {
                 break;
             case 'scissors':
                 roundWinner = 'human';
+                break;
             default:
                 roundWinner = 'tie';
         }
@@ -77,8 +83,26 @@ function getRoundWinner(computerChoice, humanChoice) {
 }
 
 function playGame() {
-    let rounds = 5;
-    let score = {'human': 0, 'computer': 0};
-    playRound(score);
-
+    // let rounds = prompt('Choose amount of rounds:');
+    let rounds = 3;
+    let score = {'computer': 0, 'human': 0};
+    for (let i = 0; i < rounds; i++) {
+        playRound(score, i);
+    }
+    let winner;
+    if (score.computer > score.human) {
+        winner = 'Computer';
+    } else {
+        winner = 'Human';
+    }
+    return `Winner is: ${winner}!`;
 }
+
+// function testGetRoundWinner() {
+//     let r = 'rock';
+//     let p = 'paper';
+//     let s = 'scissors';
+//     if (getRoundWinner(r, p) === 'human') {
+//     
+// }
+// }
