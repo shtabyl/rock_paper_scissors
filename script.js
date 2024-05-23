@@ -96,15 +96,13 @@ function playGame() {
     for (let i = 0; i < rounds; i++) {
         playRound(score, i);
     }
-    let winner;
     if (score.computer > score.human) {
-        winner = 'Computer';
+        return 'The winner is Computer!';
     } else if (score.computer < score.human) {
-        winner = 'Human';
+        return 'The winner is Human!';
     } else {
-        winner = "Tie";
+        return 'Tie!';
     }
-    return `Winner is: ${winner}!`;
 }
 
 // Add tests for getRoundWinner();
