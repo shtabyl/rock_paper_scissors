@@ -1,3 +1,8 @@
+// Code logic of game "Rock Paper Scissors".
+// Get computer choice, get human choice in each round, 
+// compare results and return winner.
+// Return winner after five rounds.
+
 ansVarArr = ['rock', 'paper', 'scissors'];
 Object.freeze(ansVarArr);
 
@@ -11,10 +16,12 @@ function getComputerChoice() {
 }
 
 function getHumanChoice(round) {
-    let input = prompt(`Round ${round + 1}. Enter your choice: rock, paper, scissors?`).toLowerCase();
-    // Check for wrong spelling
+    let input = prompt(`Round ${round + 1}. 
+        Enter your choice: rock, paper, scissors?`).toLowerCase();
+    // Check for wrong spelling in user input
     while (ansVarArr.indexOf(input) === -1) {
-        input = prompt(`Round ${round + 1}. Invalid input. Repeat your choice, please.`).toLowerCase();
+        input = prompt(`Round ${round + 1}. 
+            Invalid input. Repeat your choice, please.`).toLowerCase();
     }
     return input;
 }
@@ -100,11 +107,4 @@ function playGame() {
     return `Winner is: ${winner}!`;
 }
 
-// function testGetRoundWinner() {
-//     let r = 'rock';
-//     let p = 'paper';
-//     let s = 'scissors';
-//     if (getRoundWinner(r, p) === 'human') {
-//     
-// }
-// }
+// Add tests for getRoundWinner();
