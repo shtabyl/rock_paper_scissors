@@ -92,8 +92,10 @@ function playGame() {
     let winner;
     if (score.computer > score.human) {
         winner = 'Computer';
-    } else {
+    } else if (score.computer < score.human) {
         winner = 'Human';
+    } else {
+        winner = "Tie";
     }
     return `Winner is: ${winner}!`;
 }
