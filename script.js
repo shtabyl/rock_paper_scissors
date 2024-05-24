@@ -3,8 +3,7 @@
 // compare results and return winner.
 // Return winner after five rounds.
 
-ansVarArr = ['rock', 'paper', 'scissors'];
-Object.freeze(ansVarArr);
+const answerOption = ['rock', 'paper', 'scissors'];
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
@@ -12,15 +11,15 @@ function getRandomInt(max) {
 
 function getComputerChoice() {
     let randomNum = getRandomInt(3);
-    return ansVarArr[randomNum];
+    return answerOption[randomNum];
 }
 
 function getHumanChoice(round) {
-    let input = prompt(`Round ${round + 1}. 
+    let input = prompt(`Round ${round}. 
         Enter your choice: rock, paper, scissors?`).toLowerCase();
     // Check for wrong spelling in user input
-    while (ansVarArr.indexOf(input) === -1) {
-        input = prompt(`Round ${round + 1}. 
+    while (answerOption.indexOf(input) === -1) {
+        input = prompt(`Round ${round}. 
             Invalid input. Repeat your choice, please.`).toLowerCase();
     }
     return input;
@@ -43,10 +42,11 @@ function getScore(roundWinner, score) {
 function playRound(score, round) {
     let computerChoice = getComputerChoice();
     let humanChoice = getHumanChoice(round);
-    console.log('ComputerChoice:', computerChoice);
-    console.log('HumanChoice:', humanChoice);
     let roundWinner = getRoundWinner(computerChoice, humanChoice);
     getScore(roundWinner, score);
+    console.log(`Round ${round}`)
+    console.log('Computer |', computerChoice, '|', score.computer);
+    console.log('Human:   |', humanChoice, '|', score.human);
     return;
 }
 
@@ -91,9 +91,9 @@ function getRoundWinner(computerChoice, humanChoice) {
 
 function playGame() {
     // let rounds = prompt('Choose amount of rounds:');
-    let rounds = 3;
+    let rounds = 5;
     let score = {'computer': 0, 'human': 0};
-    for (let i = 0; i < rounds; i++) {
+    for (let i = 1; i <= rounds; i++) {
         playRound(score, i);
     }
     if (score.computer > score.human) {
