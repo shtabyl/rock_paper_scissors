@@ -126,3 +126,4 @@ function playGame() {
 }
 
 // Add tests for getRoundWinner();
+module.exports = getRoundWinner;
