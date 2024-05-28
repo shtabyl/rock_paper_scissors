@@ -8,9 +8,9 @@
         box-sizing: border-box;
     }
 
-    div {
+    /* div {
         border: 1px dashed gray;
-    }
+    } */
 }
 
 @layer ui-kit {
@@ -22,56 +22,131 @@
         --clr-secondary-blue: #025F9A;
         --clr-bg: #0B0B2F;
         font-family: sans-serif;
+        font-size: 24px;
     }
+
+    .blue-text {
+        color: var(--clr-primary-blue);
+    }
+    .pink-text {
+        color: var(--clr-primary-pink);
+    }
+    .green-text {
+        color: var(--clr-primary-green);
+    }
+    .yellow-text {
+        color: var(--clr-primary-yellow);
+    }
+    .dark-text {
+        color: var(--clr-secondary-blue);
+    }
+
+    .primary-shape,
+    .secondary-shape,
+    .round-shape {
+        text-align: center;
+        vertical-align: baseline;
+        height: 50px;
+        border: 3px solid;
+        border-radius: 50px;
+        background-color: transparent;
+    }
+    span.primary-shape,
+    span.secondary-shape,
+    span.round-shape {
+        padding-top: 9px;
+    }
+    .primary-shape {
+        width: 160px;
+    }
+    .secondary-shape {
+        width: 220px;
+    }
+    .round-shape {
+        width: 50px;
+    }
+
+    .border-pink {
+        border-color: var(--clr-primary-pink);
+    }
+    .border-green {
+        border-color: var(--clr-primary-green);
+    }
+
+
 }
 
 @layer layout {
+    body {
+        background-color: var(--clr-bg);
+    }
     .content-container {
         width: 60vw;
         height: 100vh;
         margin: 0 auto;
-
+        padding-top: 40px;
     }
 
     .play-field-container {
         display: flex;
         justify-content: space-evenly;
+        padding: 50px 10px;
+        gap: 10px;
     }
 
     .choice-buttons-box {
         display: flex;
         flex-direction: column;
-        
+        margin-left: -35px;
+        gap: 30px;
     }
 
     .round-box {
         display: flex;
         flex-direction: column;
         align-items: center;
+        gap: 32px;
     }
 
     .computer-choice-box {
         display: flex;
         flex-direction: column;
         align-items: center;
+        gap: 32px;
     }
 
     .points-box {
         display: flex;
         justify-content: space-evenly;
-        & > * {
-            border: 1px solid green;
-        }
+        align-items: center;
+        gap: 10px;
+        /* padding: 15px 0; */
     }
 
     .result-box {
         text-align: center;
-
+        padding: 60px 0;
     }
 }
 
 @layer decoration {
     .title {
         text-align: center;
+    }
+
+    button {
+        font: inherit;
+        cursor: pointer;
+        &:hover {
+            background-color: var(--clr-primary-green);
+        }
+        &:active {
+            background-color: var(--clr-secondary-blue);
+        }
+    }
+
+    .emoji {
+        font-size: 50px;
+        padding-right: 10px;
     }
 }
