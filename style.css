@@ -1,0 +1,21 @@
+@layer reset {
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+}
+
+@layer ui-kit {
+    :root {
+        --clr-main: ;
+    }
+}
+
+@layer layout {
+
+}
+
+@layer decoration {
+
+}
