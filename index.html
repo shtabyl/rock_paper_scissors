@@ -7,9 +7,9 @@
     <script src="script.js" defer></script>
     <title>Rock Paper Scissors</title>
 </head>
-<body>
+<body class="grandstander-regular">
     <div class="content-container">
-        <h1 class="title">
+        <h1 class="header title">
             <span class="blue-text">Rock</span>
             <span class="pink-text">Paper</span>
             <span class="green-text">Scissors</span>
@@ -19,20 +19,20 @@
                 <h5 class="user-name title green-text">You</h5>
                 <div class="rock-button-box">
                     <span class="'emoji rock-emoji">&#9994;</span>
-                    <button class="user-choice yellow-text primary-shape border-green">Rock</button>
+                    <button class="rock-button user-choice yellow-text primary-shape border-green" disabled>Rock</button>
                 </div>
                 <div class="paper-button-box">
                     <span class="'emoji paper-emoji">&#9995;</span>
-                    <button class="user-choice pink-text primary-shape border-green">Paper</button>
+                    <button class="paper-button user-choice pink-text primary-shape border-green" disabled>Paper</button>
                 </div>
                 <div class="scissors-button-box">
                     <span class="'emoji scissors-emoji">&#9996;</span>
-                    <button class="user-choice blue-text primary-shape border-green">Scissors</button>
+                    <button class="scissors-button user-choice blue-text primary-shape border-green" disabled>Scissors</button>
                 </div>
             </div>
             <div class="round-box">
-                <h5 class="round yellow-text">ROUND</h5>
-                <span class="round-counter yellow-text round-shape">1</span>
+                <h5 class="round yellow-text title">ROUND</h5>
+                <span class="round-counter dark-text round-shape">1</span>
                 <span class="round-counter dark-text round-shape">2</span>
                 <span class="round-counter dark-text round-shape">3</span>
             </div>
@@ -44,13 +44,21 @@
             </div>
         </div>
         <div class="points-box">
-            <span class="result-human yellow-text secondary-shape border-pink">0</span>
+            <span class="points-human yellow-text secondary-shape border-pink">0</span>
             <h5 class="result-title title blue-text">POINTS</h5>
-            <span class="result-computer yellow-text secondary-shape border-pink">0</span>
+            <span class="points-computer yellow-text secondary-shape border-pink">0</span>
         </div>
         <div class="result-box">
-            <p class="game-result"></p>
-            <button class="start-game yellow-text secondary-shape">Play</button>
+            <div class="human-prize">
+                <span class="human-cup">🏆</span>
+            </div>
+            <div class="result-main">
+                <p class="game-result pink-text title"></p>
+                <button class="start-game green-text secondary-shape">Play</button>
+            </div>
+            <div class="computer-prize">
+                <span class="human-cup">🏆</span>
+            </div>
         </div>
     </div>
 

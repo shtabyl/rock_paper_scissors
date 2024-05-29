@@ -5,7 +5,29 @@
  * Return the winner after five rounds.
  */
 
-const answerOption = ['rock', 'paper', 'scissors'];
+const ANSWER_OPTION = ['rock', 'paper', 'scissors'];
+const MAX_ROUNDS = 3;
+
+const playBtn = document.querySelector('.start-game');
+const rockBtn = document.querySelector('.rock-button');
+const paperBtn = document.querySelector('.paper-button')
+const scissorsBtn = document.querySelector('.scissors-button');
+const playField = document.querySelector('.play-field-container');
+const pointsBox = document.querySelector('.points-box');
+const resultBox = document.querySelector('.result-box');
+const pointsHuman = document.querySelector('.points-human');
+const pointsComputer = document.querySelector('.points-computer');
+const gameResult = document.querySelector('.game-result');
+const humanPrize = document.querySelector('.human-prize');
+const computerPrize = document.querySelector('.computer-prize');
+
+const roundCounters = document.querySelectorAll('.round-counter');
+const humanChoiceBtns = document.querySelectorAll('.user-choice');
+const computerChoiceBtns = document.querySelectorAll('.computer-choice');
+
+let score = {};
+let round;
+
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
@@ -13,19 +35,7 @@ function getRandomInt(max) {
 
 function getComputerChoice() {
     let randomNum = getRandomInt(3);
-    return answerOption[randomNum];
-}
-
-function getHumanChoice(round) {
-    let input = prompt(`Round ${round}. 
-        Enter your choice: rock, paper, scissors?`).toLowerCase();
-
-    // Check for wrong spelling in user input
-    while (answerOption.indexOf(input) === -1) {
-        input = prompt(`Round ${round}. 
-            Invalid input. Repeat your choice, please.`).toLowerCase();
-    }
-    return input;
+    return ANSWER_OPTION[randomNum];
 }
 
 function getRoundWinner(computerChoice, humanChoice) {
@@ -76,54 +86,180 @@ function getRoundWinner(computerChoice, humanChoice) {
     return roundWinner;
 }
 
-function getScore(roundWinner, score) {
-        if (roundWinner === 'human') {
-            score.human += 1;
-            return;
-        } else if (roundWinner === 'computer') {
-            score.computer += 1;
-            return score;
-        } else {
-            score.computer += 1;
-            score.human += 1;
-        }
+function getScore(roundWinner) {
+    if (roundWinner === 'human') {
+        score.human += 1;
+        pointsHuman.style.backgroundColor = '#00E9D3';
+        setTimeout(() => {
+            pointsHuman.style.backgroundColor = 'transparent';
+        }, 0.2 * 1000);
+        return;
+    } else if (roundWinner === 'computer') {
+        score.computer += 1;
+        pointsComputer.style.backgroundColor = '#00E9D3';
+        setTimeout(() => {
+            pointsComputer.style.backgroundColor = 'transparent';
+        }, 0.2 * 1000);
         return;
     }
+    score.computer += 1;
+    score.human += 1;
+    pointsComputer.style.backgroundColor = '#00E9D3';
+    pointsHuman.style.backgroundColor = '#00E9D3';
+        setTimeout(() => {
+            pointsHuman.style.backgroundColor = 'transparent';
+            pointsComputer.style.backgroundColor = 'transparent';
+        }, 0.2 * 1000);
+    return;
+    }
 
-function playRound(score, round) {
+function playRound(humanChoice) {
     let computerChoice = getComputerChoice();
-    let humanChoice = getHumanChoice(round);
+    console.log('human:', humanChoice);
+    console.log('comp:', computerChoice);
     let roundWinner = getRoundWinner(computerChoice, humanChoice);
-    getScore(roundWinner, score);
-    console.log(`Round ${round}`);
-    
-    // Add spaces after choice presentation for better view
-    let spacesToAdd = 'scissors'.length;
-    let spacesToAddComputer = ' '.repeat(spacesToAdd - computerChoice.length);
-    let spacesToAddHuman = ' '.repeat(spacesToAdd - humanChoice.length);
-    console.log(
-        `Computer | ${computerChoice}${spacesToAddComputer} | ${score.computer}`
-    );
-    console.log(
-        `Human    | ${humanChoice}${spacesToAddHuman} | ${score.human}`
-    );
+    getScore(roundWinner);
+    showComputerChoice(computerChoice, roundWinner);
+    showHumanChoice(humanChoice, roundWinner);
+    pointsComputer.textContent = score.computer;
+    pointsHuman.textContent = score.human;
+    if (round < 3) {
+        roundCounters[round].classList.add('active');
+    }
+    round += 1;
     return;
 }
 
-function playGame() {
-    // let rounds = prompt('Choose amount of rounds:');
-    let rounds = 5;
-    let score = {'computer': 0, 'human': 0};
-    for (let i = 1; i <= rounds; i++) {
-        playRound(score, i);
-    }
+function getResults() {
     if (score.computer > score.human) {
-        return 'The winner is Computer!';
+        gameResult.textContent = 'Computer won.';
+        computerPrize.style.visibility = 'visible';
+        return;
     } else if (score.computer < score.human) {
-        return 'The winner is Human!';
-    } 
-    return 'Tie!';  
+        gameResult.textContent = 'You won!';
+        humanPrize.style.visibility = 'visible';
+        return;
+    }
+    gameResult.textContent = 'Tie!';
+    return;
 }
 
+function startGame() {
+    score = {'computer': 0, 'human': 0};
+    if (playBtn.textContent === 'Play again'
+        || playBtn.textContent === 'New game'
+    ) {
+        roundCounters.forEach((item) => item.classList.remove('active'));
+    } 
+    roundCounters[0].classList.toggle('active');
+    // playBtn.disabled = true;
+    playBtn.textContent = 'New game';
+    enableHumanChoiceBtns();
+    gameResult.textContent = '';
+    pointsComputer.textContent = score.computer;
+    pointsHuman.textContent = score.human;
+    computerPrize.style.visibility = 'hidden';
+    humanPrize.style.visibility = 'hidden';
+    round = 1;
+}
+
+function endGame() {
+    disableHumanChoiceBtns();
+    playBtn.disabled = false;
+    playBtn.textContent = 'Play again';
+    getResults();
+}
+
+function disableHumanChoiceBtns() {
+    humanChoiceBtns.forEach((btn) => {
+        btn.disabled = true;
+    });
+}
+
+function enableHumanChoiceBtns() {
+    humanChoiceBtns.forEach((btn) => {
+        btn.disabled = false;
+    });
+}
+
+function showComputerChoice(computerChoice, roundWinner) {
+    let index = ANSWER_OPTION.indexOf(computerChoice);
+    if (roundWinner === 'coumputer') {
+        computerChoiceBtns[index].classList.add('selected');
+        setTimeout(() => {
+            computerChoiceBtns[index].classList.remove('selected');
+        }, 1.0 * 1000);
+    } else {
+        computerChoiceBtns[index].classList.add('selected-winner');
+        setTimeout(() => {
+            computerChoiceBtns[index].classList.remove('selected-winner');
+        }, 1.0 * 1000);
+    }
+}
+
+function showHumanChoice(humanChoice, roundWinner) {
+    humanChoiceBtns.forEach((btn) => btn.disabled = true);
+    let index = ANSWER_OPTION.indexOf(humanChoice);
+    if (roundWinner === 'computer') {
+        humanChoiceBtns[index].classList.add('selected');
+        if (round < 3) {
+            setTimeout(() => {
+                humanChoiceBtns.forEach((btn) => btn.disabled = false);
+                humanChoiceBtns[index].classList.remove('selected');
+            }, 1.0 * 1000);
+        } else {
+            setTimeout(() => {
+                humanChoiceBtns[index].classList.remove('selected');
+            }, 1.0 * 1000);
+        }
+    } else {
+        humanChoiceBtns[index].classList.add('selected-winner');
+        if (round < 3) {
+            setTimeout(() => {
+                humanChoiceBtns.forEach((btn) => btn.disabled = false);
+                humanChoiceBtns[index].classList.remove('selected-winner');
+            }, 1.0 * 1000);
+        } else {
+            setTimeout(() => {
+                humanChoiceBtns[index].classList.remove('selected-winner');
+            }, 1.0 * 1000);
+        }
+    }
+}
+
+document.addEventListener('click', (e) => {
+    switch(e.target) {
+        case playBtn: {
+            startGame();
+            console.log(score, round);
+            break;
+        }
+        case rockBtn: {
+            playRound('rock');
+            console.log(score, round);
+            if (round > MAX_ROUNDS) {
+                endGame();
+            }
+            break;
+        }
+        case paperBtn: {
+            playRound('paper');
+            console.log(score, round);
+            if (round > MAX_ROUNDS) {
+                endGame();
+            }
+            break;
+        }
+        case scissorsBtn: {
+            playRound('scissors');
+            console.log(score, round);
+            if (round > MAX_ROUNDS) {
+                endGame();
+            }
+            break;
+        }
+    }
+});
+
 // Add tests for getRoundWinner();
-module.exports = getRoundWinner;
+// module.exports = getRoundWinner;

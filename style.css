@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Grandstander:ital,wght@0,100..900;1,100..900&display=swap');
 
 @layer reset {
     *,
@@ -22,9 +23,14 @@
         --clr-secondary-blue: #025F9A;
         --clr-bg: #0B0B2F;
         font-family: sans-serif;
-        font-size: 24px;
+        font-size: 22px;
     }
-
+    .grandstander-regular {
+        font-family: "Grandstander", cursive;
+        font-optical-sizing: auto;
+        font-weight: 400;
+        font-style: normal;
+    }
     .blue-text {
         color: var(--clr-primary-blue);
     }
@@ -40,12 +46,10 @@
     .dark-text {
         color: var(--clr-secondary-blue);
     }
-
     .primary-shape,
     .secondary-shape,
     .round-shape {
         text-align: center;
-        vertical-align: baseline;
         height: 50px;
         border: 3px solid;
         border-radius: 50px;
@@ -54,7 +58,8 @@
     span.primary-shape,
     span.secondary-shape,
     span.round-shape {
-        padding-top: 9px;
+        display: grid;
+        align-items: center;
     }
     .primary-shape {
         width: 160px;
@@ -65,16 +70,14 @@
     .round-shape {
         width: 50px;
     }
-
     .border-pink {
         border-color: var(--clr-primary-pink);
     }
     .border-green {
         border-color: var(--clr-primary-green);
     }
-
-
 }
+
 
 @layer layout {
     body {
@@ -84,69 +87,115 @@
         width: 60vw;
         height: 100vh;
         margin: 0 auto;
-        padding-top: 40px;
+        padding-top: 60px;
     }
-
     .play-field-container {
         display: flex;
         justify-content: space-evenly;
-        padding: 50px 10px;
+        padding: 60px 10px;
         gap: 10px;
     }
-
     .choice-buttons-box {
         display: flex;
         flex-direction: column;
         margin-left: -35px;
         gap: 30px;
     }
-
     .round-box {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 32px;
+        gap: 30px;
     }
-
     .computer-choice-box {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 32px;
+        gap: 30px;
     }
-
     .points-box {
         display: flex;
         justify-content: space-evenly;
         align-items: center;
         gap: 10px;
-        /* padding: 15px 0; */
+        padding: 15px 0;
     }
-
     .result-box {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
         text-align: center;
-        padding: 60px 0;
+        padding: 30px 0;
+    }
+    .game-result {
+        height: 20px;
+        margin-bottom: 30px;
     }
 }
 
 @layer decoration {
     .title {
         text-align: center;
+        font-size: 28px;
     }
-
+    .header {
+        letter-spacing: 2px;
+        font-size: 60px;
+    }
     button {
         font: inherit;
         cursor: pointer;
-        &:hover {
-            background-color: var(--clr-primary-green);
+    }
+    .user-choice {
+        &:hover:enabled {
+            color: var(--clr-primary-green);
+            border-color: var(--clr-primary-yellow);
         }
-        &:active {
+        &:active:enabled {
             background-color: var(--clr-secondary-blue);
         }
+        &:disabled {
+            cursor: auto;
+            color: var(--clr-secondary-blue);
+            border-color: var(--clr-secondary-blue);
+        }
     }
-
-    .emoji {
-        font-size: 50px;
-        padding-right: 10px;
+    .start-game {
+        &:hover:enabled {
+            color: var(--clr-primary-yellow);
+            border-color: var(--clr-primary-pink);
+        }
+        &:active:enabled {
+            background-color: var(--clr-secondary-blue);
+        }
+        &:disabled {
+            cursor: auto;
+            color: var(--clr-secondary-blue);
+            border-color: var(--clr-secondary-blue);
+        }
+    }
+    .human-cup {
+        font-size: 70px;
+    }
+    .round-counter.active {
+        color: var(--clr-primary-yellow);
+    }
+    .computer-choice.selected {
+        color: var(--clr-primary-yellow);
+    }
+    .computer-choice.selected-winner {
+        color: var(--clr-primary-green);
+    }
+    .user-choice.selected {
+        color: var(--clr-primary-yellow);
+        border-color: var(--clr-primary-yellow);
+    }
+    .user-choice.selected-winner {
+        color: var(--clr-primary-green);
+        border-color: var(--clr-primary-green);
+    }
+    .human-prize,
+    .computer-prize {
+        visibility: hidden;
     }
 }
