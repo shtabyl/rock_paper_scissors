@@ -92,13 +92,13 @@
     .play-field-container {
         display: flex;
         justify-content: space-evenly;
-        padding: 60px 10px;
+        padding: 60px 0;
         gap: 10px;
     }
     .choice-buttons-box {
         display: flex;
         flex-direction: column;
-        margin-left: -35px;
+        /* margin-left: -35px; */
         gap: 30px;
     }
     .round-box {
