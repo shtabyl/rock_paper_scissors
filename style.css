@@ -198,4 +198,16 @@
     .computer-prize {
         visibility: hidden;
     }
+    .copyright {
+        font-size: 14px;
+        padding-top: 20px;
+    }
+    a {
+        text-decoration: none;
+        color: var(--clr-secondary-blue);
+        cursor: pointer;
+        &:hover {
+            color: var(--clr-primary-blue);
+        }
+    }
 }
