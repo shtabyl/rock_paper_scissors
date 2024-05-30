@@ -12,6 +12,7 @@ const playBtn = document.querySelector('.start-game');
 const rockBtn = document.querySelector('.rock-button');
 const paperBtn = document.querySelector('.paper-button')
 const scissorsBtn = document.querySelector('.scissors-button');
+const userName = document.querySelector('.user-name');
 const playField = document.querySelector('.play-field-container');
 const pointsBox = document.querySelector('.points-box');
 const resultBox = document.querySelector('.result-box');
@@ -228,6 +229,12 @@ function showHumanChoice(humanChoice, roundWinner) {
 document.addEventListener('click', (e) => {
     switch(e.target) {
         case playBtn: {
+            if (playBtn.textContent === 'Play') {
+                let name = prompt('Do you want to enter your name?');
+                if (name) {
+                    userName.textContent = name;
+                }
+            }
             startGame();
             break;
         }
