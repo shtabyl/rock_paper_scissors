@@ -3,7 +3,7 @@
  * Get computer choice, get human choice in each round, 
  * compare results and return a winner of a round.
  * Return the winner after five rounds.
- */
+*/
 
 const ANSWER_OPTION = ['rock', 'paper', 'scissors'];
 const MAX_ROUNDS = 3;
@@ -34,7 +34,7 @@ function getRandomInt(max) {
 }
 
 function getComputerChoice() {
-    let randomNum = getRandomInt(3);
+    let randomNum = getRandomInt(ANSWER_OPTION.length);
     return ANSWER_OPTION[randomNum];
 }
 
@@ -114,19 +114,19 @@ function getScore(roundWinner) {
     }
 
 function playRound(humanChoice) {
+    round += 1;
     let computerChoice = getComputerChoice();
-    console.log('human:', humanChoice);
-    console.log('comp:', computerChoice);
     let roundWinner = getRoundWinner(computerChoice, humanChoice);
     getScore(roundWinner);
     showComputerChoice(computerChoice, roundWinner);
     showHumanChoice(humanChoice, roundWinner);
     pointsComputer.textContent = score.computer;
     pointsHuman.textContent = score.human;
-    if (round < 3) {
-        roundCounters[round].classList.add('active');
+    if (round < MAX_ROUNDS) {
+        setTimeout(() => {
+            roundCounters[round].classList.add('active');
+        }, 1.0 * 1000);
     }
-    round += 1;
     return;
 }
 
@@ -145,14 +145,14 @@ function getResults() {
 }
 
 function startGame() {
+    round = 0;
     score = {'computer': 0, 'human': 0};
     if (playBtn.textContent === 'Play again'
         || playBtn.textContent === 'New game'
     ) {
         roundCounters.forEach((item) => item.classList.remove('active'));
     } 
-    roundCounters[0].classList.toggle('active');
-    // playBtn.disabled = true;
+    roundCounters[round].classList.add('active');
     playBtn.textContent = 'New game';
     enableHumanChoiceBtns();
     gameResult.textContent = '';
@@ -160,12 +160,10 @@ function startGame() {
     pointsHuman.textContent = score.human;
     computerPrize.style.visibility = 'hidden';
     humanPrize.style.visibility = 'hidden';
-    round = 1;
 }
 
 function endGame() {
     disableHumanChoiceBtns();
-    playBtn.disabled = false;
     playBtn.textContent = 'Play again';
     getResults();
 }
@@ -184,7 +182,7 @@ function enableHumanChoiceBtns() {
 
 function showComputerChoice(computerChoice, roundWinner) {
     let index = ANSWER_OPTION.indexOf(computerChoice);
-    if (roundWinner === 'coumputer') {
+    if (roundWinner === 'human') {
         computerChoiceBtns[index].classList.add('selected');
         setTimeout(() => {
             computerChoiceBtns[index].classList.remove('selected');
@@ -198,13 +196,13 @@ function showComputerChoice(computerChoice, roundWinner) {
 }
 
 function showHumanChoice(humanChoice, roundWinner) {
-    humanChoiceBtns.forEach((btn) => btn.disabled = true);
+    disableHumanChoiceBtns();
     let index = ANSWER_OPTION.indexOf(humanChoice);
     if (roundWinner === 'computer') {
         humanChoiceBtns[index].classList.add('selected');
-        if (round < 3) {
+        if (round < MAX_ROUNDS) {
             setTimeout(() => {
-                humanChoiceBtns.forEach((btn) => btn.disabled = false);
+                enableHumanChoiceBtns();
                 humanChoiceBtns[index].classList.remove('selected');
             }, 1.0 * 1000);
         } else {
@@ -214,9 +212,9 @@ function showHumanChoice(humanChoice, roundWinner) {
         }
     } else {
         humanChoiceBtns[index].classList.add('selected-winner');
-        if (round < 3) {
+        if (round < MAX_ROUNDS) {
             setTimeout(() => {
-                humanChoiceBtns.forEach((btn) => btn.disabled = false);
+                enableHumanChoiceBtns();
                 humanChoiceBtns[index].classList.remove('selected-winner');
             }, 1.0 * 1000);
         } else {
@@ -231,29 +229,25 @@ document.addEventListener('click', (e) => {
     switch(e.target) {
         case playBtn: {
             startGame();
-            console.log(score, round);
             break;
         }
         case rockBtn: {
             playRound('rock');
-            console.log(score, round);
-            if (round > MAX_ROUNDS) {
+            if (round === MAX_ROUNDS) {
                 endGame();
             }
             break;
         }
         case paperBtn: {
             playRound('paper');
-            console.log(score, round);
-            if (round > MAX_ROUNDS) {
+            if (round === MAX_ROUNDS) {
                 endGame();
             }
             break;
         }
         case scissorsBtn: {
             playRound('scissors');
-            console.log(score, round);
-            if (round > MAX_ROUNDS) {
+            if (round === MAX_ROUNDS) {
                 endGame();
             }
             break;
@@ -261,5 +255,4 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// Add tests for getRoundWinner();
 // module.exports = getRoundWinner;
